@@ -72,7 +72,7 @@ app.post('/Cycle3/cart', function(req, res) {
 
     const mysql = require('mysql2');
     const con = mysql.createConnection({
-        host: process.env.DB_HOST || "localhost",     
+        host: process.env.DB_HOST || "mysql",     
         user: process.env.DB_USER || "user99",
         password: process.env.DB_PASSWORD || "user99",
         database: process.env.DB_NAME || "comp7780"
@@ -130,7 +130,7 @@ app.post('/Cycle3/check_out', function(req, res) {
 
     const mysql = require('mysql2');
     const con = mysql.createConnection({
-        host: process.env.DB_HOST || "localhost",     
+        host: process.env.DB_HOST || "mysql",     
         user: process.env.DB_USER || "user99",
         password: process.env.DB_PASSWORD || "user99",
         database: process.env.DB_NAME || "comp7780"
@@ -224,7 +224,7 @@ app.post('/Cycle3/clear_cart', function(req, res) {
 
     const mysql = require('mysql2');
     const con = mysql.createConnection({
-        host: process.env.DB_HOST || "localhost",     
+        host: process.env.DB_HOST || "mysql",     
         user: process.env.DB_USER || "user99",
         password: process.env.DB_PASSWORD || "user99",
         database: process.env.DB_NAME || "comp7780"
@@ -254,9 +254,10 @@ app.post('/Cycle3/clear_cart', function(req, res) {
 });
 
 // Start the server
-app.listen(8080, function() {
-    console.log('index.js listening to http://127.0.0.1:8080/ or http://localhost:8080/');
+app.listen(3000, '0.0.0.0', function() {
+    console.log('App running at http://localhost:3000');
 });
 
 //end
+console.log('DB_HOST:', process.env.DB_HOST);
 console.log('End of Program.');

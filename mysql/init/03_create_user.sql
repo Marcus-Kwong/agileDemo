@@ -15,5 +15,5 @@ CREATE USER 'user99'@'localhost' IDENTIFIED BY 'user99';
 
 GRANT ALL ON *.* TO 'user99'@'localhost';
 
-ALTER USER 'user99'@'localhost' IDENTIFIED WITH mysql_native_password BY 'user99';
+-- ALTER USER 'user99'@'localhost' IDENTIFIED WITH mysql_native_password BY 'user99';
 FLUSH PRIVILEGES;
