@@ -70,12 +70,12 @@ app.post('/Cycle3/cart', function(req, res) {
     var cur_date_yyyy_mm_dd = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
     console.log("cur_date_yyyy_mm_dd is: " + cur_date_yyyy_mm_dd);
 
-    var mysql = require('mysql2');
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: "user99",
-        password: "user99",
-        database: "comp7780"
+    const mysql = require('mysql2');
+    const con = mysql.createConnection({
+        host: process.env.DB_HOST || "localhost",     
+        user: process.env.DB_USER || "user99",
+        password: process.env.DB_PASSWORD || "user99",
+        database: process.env.DB_NAME || "comp7780"
     });
 
     con.connect(function(err) {
@@ -128,12 +128,12 @@ app.post('/Cycle3/check_out', function(req, res) {
     responseText += '<body><script src="https://www.paypal.com/sdk/js?client-id=ATSWa9vavLRPYABa5DAFOb7d6xFXlYIfpC4eE0ML-fo4wvxD7MhswAQkklI625Mqnbudf6psDaPUC5mj">';
     responseText += '</script>';
 
-    var mysql = require('mysql2');
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: "user99",
-        password: "user99",
-        database: "comp7780"
+    const mysql = require('mysql2');
+    const con = mysql.createConnection({
+        host: process.env.DB_HOST || "localhost",     
+        user: process.env.DB_USER || "user99",
+        password: process.env.DB_PASSWORD || "user99",
+        database: process.env.DB_NAME || "comp7780"
     });
 
     con.connect(function(err) {
@@ -222,12 +222,12 @@ app.post('/Cycle3/check_out', function(req, res) {
 app.post('/Cycle3/clear_cart', function(req, res) {
     var username = req.body.f_username;
 
-    var mysql = require('mysql2');
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: "user99",
-        password: "user99",
-        database: "comp7780"
+    const mysql = require('mysql2');
+    const con = mysql.createConnection({
+        host: process.env.DB_HOST || "localhost",     
+        user: process.env.DB_USER || "user99",
+        password: process.env.DB_PASSWORD || "user99",
+        database: process.env.DB_NAME || "comp7780"
     });
 
     con.connect(function(err) {
