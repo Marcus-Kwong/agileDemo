@@ -17,9 +17,9 @@ use comp7780;
 ### 
 #################################
 
-DROP TABLE employee;
+DROP TABLE IF EXISTS employee;
 
-CREATE TABLE employee (
+CREATE TABLE IF NOT EXISTS employee (
 empl_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 empl_name VARCHAR(20) NOT NULL,
 empl_email VARCHAR(20) NOT NULL,
@@ -40,9 +40,9 @@ INSERT INTO employee VALUES (null, 'empl1', 'empl1@abc.com', '415-123-4567', '20
 ### 
 #################################
 
-DROP TABLE customer;
+DROP TABLE IF EXISTS customer;
 
-CREATE TABLE customer (
+CREATE TABLE IF NOT EXISTS customer (
 cust_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 cust_username VARCHAR(20) NOT NULL,
 cust_password VARCHAR(64),
@@ -59,9 +59,9 @@ INSERT INTO customer VALUES (null, 'cust1', null, 'cust1@xyz.com', 'Cust1', '415
 (null, 'cust3', null, 'cust3@xyz.com', 'Cust3', '415-345-6789', 5000),
 (null, 'cust4', null, 'cust4@xyz.com', 'Cust4', '415-456-7890', 5000);
 
-DROP TABLE product;
+DROP TABLE IF EXISTS product;
 
-CREATE TABLE product (
+CREATE TABLE IF NOT EXISTS product (
 prod_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 prod_desc VARCHAR(20) NOT NULL,
 prod_on_hand INT NOT NULL,
@@ -75,9 +75,9 @@ INSERT INTO product VALUES (null, 'Prod1', 12, 1),
 (null, 'Prod3', 8, 2),
 (null, 'Prod4', 5, 2);
 
-DROP TABLE supplier;
+DROP TABLE IF EXISTS supplier;
 
-CREATE TABLE supplier (
+CREATE TABLE IF NOT EXISTS supplier (
 supplier_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 supplier_name VARCHAR(20) NOT NULL,
 supplier_email VARCHAR(20) NOT NULL
@@ -88,9 +88,9 @@ desc supplier;
 INSERT INTO supplier VALUES (null, 'Supplier1', 'supplier1@aaa.com'),
 (null, 'Supplier2', 'supplier2@bbb.com');
 
-DROP TABLE cart;
+DROP TABLE IF EXISTS cart;
 
-CREATE TABLE cart (
+CREATE TABLE IF NOT EXISTS cart (
 cust_username VARCHAR(20) NOT NULL,
 cart_order_date date,
 prod_id INT NOT NULL,
@@ -100,9 +100,9 @@ cart_price FLOAT NOT NULL
 
 desc cart;
 
-DROP TABLE sales_order;
+DROP TABLE IF EXISTS sales_order;
 
-CREATE TABLE sales_order (
+CREATE TABLE IF NOT EXISTS sales_order (
 order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 cust_username VARCHAR(20) NOT NULL,
 order_date date
@@ -110,9 +110,9 @@ order_date date
 
 desc sales_order;
 
-DROP TABLE order_detail;
+DROP TABLE IF EXISTS order_detail;
 
-CREATE TABLE order_detail (
+CREATE TABLE IF NOT EXISTS order_detail (
 order_id INT NOT NULL,
 prod_id INT NOT NULL,
 qty INT NOT NULL,
@@ -126,9 +126,9 @@ desc order_detail;
 ###
 ###################################
 
-DROP TABLE po;
+DROP TABLE IF EXISTS po;
 
-CREATE TABLE po (
+CREATE TABLE IF NOT EXISTS po (
 po_num INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 po_date date,
 prod_id INT NOT NULL,

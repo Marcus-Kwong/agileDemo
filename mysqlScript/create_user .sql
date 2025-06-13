@@ -9,10 +9,11 @@
 ### 3. stop mysql: go to cmd as Administrator, enter 'net stop mysql80'
 ############################
 
+
+DROP USER IF EXISTS 'user99'@'localhost';
 CREATE USER 'user99'@'localhost' IDENTIFIED BY 'user99';
 
 GRANT ALL ON *.* TO 'user99'@'localhost';
 
 ALTER USER 'user99'@'localhost' IDENTIFIED WITH mysql_native_password BY 'user99';
-
-flush privileges;
+FLUSH PRIVILEGES;
