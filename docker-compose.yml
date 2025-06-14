@@ -22,4 +22,4 @@ services:
       MYSQL_USER: user99
       MYSQL_PASSWORD: user99
     volumes:
-      - ./mysql_scripts:/docker-entrypoint-initdb.d
+      - ./mysql/init:/docker-entrypoint-initdb.d
