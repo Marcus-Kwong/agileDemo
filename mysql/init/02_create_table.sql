@@ -17,7 +17,7 @@ use comp7780;
 ### 
 #################################
 
--- DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS employee;
 
 CREATE TABLE IF NOT EXISTS employee (
 empl_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -40,7 +40,7 @@ INSERT INTO employee VALUES (null, 'empl1', 'empl1@abc.com', '415-123-4567', '20
 ### 
 #################################
 
--- DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS customer;
 
 CREATE TABLE IF NOT EXISTS customer (
 cust_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -59,7 +59,7 @@ INSERT INTO customer VALUES (null, 'cust1', null, 'cust1@xyz.com', 'Cust1', '415
 (null, 'cust3', null, 'cust3@xyz.com', 'Cust3', '415-345-6789', 5000),
 (null, 'cust4', null, 'cust4@xyz.com', 'Cust4', '415-456-7890', 5000);
 
--- DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS product;
 
 CREATE TABLE IF NOT EXISTS product (
 prod_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -75,7 +75,7 @@ INSERT INTO product VALUES (null, 'Prod1', 12, 1),
 (null, 'Prod3', 8, 2),
 (null, 'Prod4', 5, 2);
 
--- DROP TABLE IF EXISTS supplier;
+DROP TABLE IF EXISTS supplier;
 
 CREATE TABLE IF NOT EXISTS supplier (
 supplier_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -88,7 +88,7 @@ desc supplier;
 INSERT INTO supplier VALUES (null, 'Supplier1', 'supplier1@aaa.com'),
 (null, 'Supplier2', 'supplier2@bbb.com');
 
--- DROP TABLE IF EXISTS cart;
+DROP TABLE IF EXISTS cart;
 
 CREATE TABLE IF NOT EXISTS cart (
 cust_username VARCHAR(20) NOT NULL,
@@ -100,7 +100,7 @@ cart_price FLOAT NOT NULL
 
 desc cart;
 
--- DROP TABLE IF EXISTS sales_order;
+DROP TABLE IF EXISTS sales_order;
 
 CREATE TABLE IF NOT EXISTS sales_order (
 order_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -110,7 +110,7 @@ order_date date
 
 desc sales_order;
 
--- DROP TABLE IF EXISTS order_detail;
+DROP TABLE IF EXISTS order_detail;
 
 CREATE TABLE IF NOT EXISTS order_detail (
 order_id INT NOT NULL,
@@ -126,7 +126,7 @@ desc order_detail;
 ###
 ###################################
 
--- DROP TABLE IF EXISTS po;
+DROP TABLE IF EXISTS po;
 
 CREATE TABLE IF NOT EXISTS po (
 po_num INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
