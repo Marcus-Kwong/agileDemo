@@ -10,5 +10,5 @@
 ### 3. stop mysql: go to cmd as Administrator, enter 'net stop mysql80'
 ############################
 
--- DROP DATABASE IF EXISTS comp7780;
+DROP DATABASE IF EXISTS comp7780;
 CREATE DATABASE IF NOT EXISTS comp7780;

@@ -10,7 +10,7 @@
 ############################
 
 
--- DROP USER IF EXISTS 'user99'@'localhost';
+DROP USER IF EXISTS 'user99'@'localhost';
 CREATE USER 'user99'@'localhost' IDENTIFIED BY 'user99';
 
 GRANT ALL ON *.* TO 'user99'@'localhost';
