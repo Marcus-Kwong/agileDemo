@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: agileDemo-app
     build: .
     ports:
       - "3000:3000"
@@ -12,6 +13,7 @@ services:
       DB_NAME: comp7780
 
   mysql:
+    container_name: agileDemo-mysql
     image: mysql:8
     # command: --default-authentication-plugin=mysql_native_password
     ports:
