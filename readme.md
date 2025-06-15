@@ -44,11 +44,33 @@ Please evaluate this project primarily as an Agile and DevOps showcase, rather t
 
 ```
 agileDemo/
-├── cycle1/      # Static HTML prototype
-├── cycle2/      # Express-based routing and enhancements
-├── cycle3/      # Backend integration with Node.js and MySQL
-├── docker/      # Dockerfiles and container configs
+├── assets/                 # Static images used in all HTML cycles
+│   └── images/
+│       └── pics/
+│           ├── home_pics/         # Homepage visuals
+│           └── product_pics/      # Product-related visuals (by category)
+├── docker-compose.yml      # Defines multi-container setup (Node + MySQL)
+├── Dockerfile              # Node.js app container configuration
+├── index.js                # Main Express server handling routing and static serving
+├── mysql/
+│   └── init/               # MySQL initialization scripts
+│       ├── 01_create_db.sql
+│       ├── 02_create_table.sql
+│       └── 03_create_user.sql
+├── package.json            # Node dependencies and metadata
+├── public/
+│   └── css/                # Public stylesheets served by Express
+│       ├── cycle3Style.css
+│       └── homePageStyle.css
+├── test/
+│   └── MysqlConnectTest.js # Dev script for verifying DB connection
+├── views/                  # All frontend HTML files for 3 development cycles
+│   ├── Cycle1/             # Initial static pages (no backend)
+│   ├── Cycle2/             # Basic page routing via Express
+│   ├── Cycle3/             # Fully integrated with MySQL backend
+│   └── homePage.html       # Project landing page, introducing all 3 cycles
 └── README.md
+
 ```
 
 ---
