@@ -6,26 +6,30 @@ app.use(express.json());  // 解析 application/json 数据（已经用在 fetch
 /* define pictures, css and images folders */
 app.use(express.static('public'));
 app.use('/assets', express.static(__dirname + '/assets'));
-app.use('/Cycle1', express.static(__dirname + '/Cycle1'));
-app.use('/Cycle2', express.static(__dirname + '/Cycle2'));
-app.use('/Cycle3', express.static(__dirname + '/Cycle3'));
+app.use('/Cycle1', express.static(__dirname + '/views/Cycle1'));
+app.use('/Cycle2', express.static(__dirname + '/views/Cycle2'));
+app.use('/Cycle3', express.static(__dirname + '/views/Cycle3'));
 
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + "/homePage.html");
+    res.sendFile(__dirname + "/views/homePage.html");
 });
 
-app.get('/Cycle1', function(req, res) {
-    res.sendFile(__dirname + "/Cycle1/cycle1_home.html");
+app.get('/Cycle1_home', function(req, res) {
+    res.sendFile(__dirname + "/views/Cycle1/cycle1_home.html");
+});
+
+app.get('/Cycle1_product', function(req, res) {
+    res.sendFile(__dirname + "/views/Cycle1/cycle1_product.html");
 });
 
 //Cycle2
 app.get('/Cycle2', function(req, res) {
-    res.sendFile(__dirname + "/Cycle2/cycle2_home.html");
+    res.sendFile(__dirname + "/views/Cycle2/cycle2_home.html");
 });
 
 app.get('/Cycle2/product', function(req, res) {
-		res.sendFile(__dirname + "/Cycle2/cycle2_product.html");
+		res.sendFile(__dirname + "/views/Cycle2/cycle2_product.html");
 	});
 
 app.get('/Cycle2/product/cart', function(req, res) {
@@ -48,11 +52,11 @@ app.get('/Cycle2/product/check_out', function(req, res) {
 
 //Cycle3
 app.get('/Cycle3', function(req, res) {
-    res.sendFile(__dirname + "/Cycle3/cycle3_home.html");
+    res.sendFile(__dirname + "/views/Cycle3/cycle3_home.html");
 });
 
 app.get('/Cycle3/product', function(req, res) {
-		res.sendFile(__dirname + "/Cycle3/cycle3_product.html");
+		res.sendFile(__dirname + "/views/Cycle3/cycle3_product.html");
 	});
 
 // 添加到购物车路由（改为 POST 方法）
