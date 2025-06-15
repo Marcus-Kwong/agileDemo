@@ -6,7 +6,7 @@
 
 ## 🌐 Live Demo
 
-👉 [http://your-ec2-ip:3000](http://your-ec2-ip:3000)
+👉 [Agile Demo](http://18.163.159.136:3000/)
 
 - `/cycle1/` — Static HTML prototype (no backend)
 - `/cycle2/` — Interactive pages with basic routing (Express)
