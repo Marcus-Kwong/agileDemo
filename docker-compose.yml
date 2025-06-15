@@ -4,6 +4,7 @@ services:
     build: .
     ports:
       - "3000:3000"
+    restart: unless-stopped
     depends_on:
       - mysql
     environment:
@@ -26,5 +27,10 @@ services:
     volumes:
       - agileDemo_mysql_data:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d
+    command: >
+      bash -c "
+      rm -rf /var/lib/mysql/* &&
+      docker-entrypoint.sh mysqld
+      "
 volumes:
   agileDemo_mysql_data:
