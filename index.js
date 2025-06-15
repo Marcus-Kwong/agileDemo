@@ -5,6 +5,7 @@ app.use(express.json());  // 解析 application/json 数据（已经用在 fetch
 
 /* define pictures, css and images folders */
 app.use(express.static('public'));
+app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/Cycle1', express.static(__dirname + '/Cycle1'));
 app.use('/Cycle2', express.static(__dirname + '/Cycle2'));
 app.use('/Cycle3', express.static(__dirname + '/Cycle3'));

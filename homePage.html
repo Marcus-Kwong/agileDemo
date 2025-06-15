@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agile Demo · Iterative Development Showcase</title>
+  <link rel="stylesheet" href="public/style.css" />
 </head>
 <body>
-  <h1>Welcome to My Home Page</h1>
-  <ul>
-    <li><a href="/Cycle1">Cycle1</a></li>
-    <li><a href="/Cycle2">Cycle2</a></li>
-    <li><a href="/Cycle3">Cycle3</a></li>
+  <div class="container">
+    <h1>🚀 Agile Demo Project Overview</h1>
+
+    <p class="intro">
+      This project simulates the development of an online beverage store through three Agile iterations. The goal is not to create a complete commercial system, but to demonstrate:
+    </p>
+    <ul class="highlight-list">
+      <li>✔️ Understanding of <strong>Agile development</strong></li>
+      <li>✔️ Hands-on use of <strong>Docker</strong> for containerization</li>
+      <li>✔️ End-to-end <strong>cloud deployment</strong> via AWS EC2</li>
+    </ul>
+
+    <div class="cycle-section">
+      <h2>🔁 Cycle 1 – Initial Client Delivery</h2>
+      <p>This version contains only two static HTML pages (Home & Product) with no server-side functionality.</p>
+      <a href="/cycle1/home.html" class="button">Cycle 1 - Home Page</a>
+      <a href="/cycle1/product.html" class="button">Cycle 1 - Product Page</a>
+    </div>
+
+    <div class="cycle-section">
+      <h2>⚙️ Cycle 2 – Added Basic Interactivity</h2>
+      <p>Refined UI + Express server with basic page routing.</p>
+      <a href="/cycle2/" class="button">Cycle 2 - Entry Page</a>
+    </div>
+
+    <div class="cycle-section">
+      <h2>✅ Cycle 3 – Final Delivery</h2>
+      <p>Node.js backend + MySQL integration + Docker deployment to AWS EC2.</p>
+      <a href="/cycle3/" class="button">Cycle 3 - Entry Page</a>
+    </div>
+
+    <div class="summary">
+      <h2>📦 Key Highlights</h2>
+      <ul>
+        <li><strong>DevOps Flow:</strong> Code → Container → Deploy</li>
+        <li><strong>Agile Iteration:</strong> Rapid delivery in 3 client-visible stages</li>
+        <li><strong>Cloud-Ready:</strong> Real deployment via AWS EC2</li>
+        <li><strong>End-to-End Stack:</strong> Frontend, backend, DB, and CI thinking</li>
+      </ul>
+      <p class="quote">"Build fast, learn faster, deploy like it's real."</p>
+    </div>
+  </div>
 </body>
-</html>`
+</html>
