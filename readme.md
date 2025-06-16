@@ -8,9 +8,9 @@
 
 👉 [Agile Demo](http://18.163.159.136:3000/)
 
-- `/cycle1/` — Static HTML prototype (no backend)
-- `/cycle2/` — Interactive pages with basic routing (Express)
-- `/cycle3/` — Fully functional backend with Node.js & MySQL
+- **Cycle1**— Static HTML prototype (no backend)
+- **Cycle2** — Interactive pages with basic routing (Express)
+- **Cycle3** — Fully functional backend with Node.js & MySQL
 
 ⚠️ *If the demo is temporarily unavailable, a demo video or screenshots can be provided upon request.*
 
