@@ -8,8 +8,6 @@
 
 👉 [Agile Demo](http://18.163.159.136:3000/)
 
-将一下的一段话翻译成英文，注意你不能直译我你中文表达，要使用更地道的英文表达
-
 ## Background
 
 During one of my postgraduate courses, I explored the principles and strategies of Agile development. As part of a team, I helped build an [online beverage store](https://github.com/icy1225/7780_assignment2_code.git) using Agile methodologies. To further demonstrate my personal grasp of Agile practices, as well as my full-stack development and deployment skills, I independently built upon that team project to create a refined version—**Agile Demo**.
