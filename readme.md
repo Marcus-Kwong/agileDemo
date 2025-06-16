@@ -4,17 +4,21 @@
 
 ---
 
-## 🌐 Live Demo
+## 🌐 Live Demo Preview
 
 👉 [Agile Demo](http://18.163.159.136:3000/)
 
-- **Cycle1**— Static HTML prototype (no backend)
-- **Cycle2** — Interactive pages with basic routing (Express)
-- **Cycle3** — Fully functional backend with Node.js & MySQL
+将一下的一段话翻译成英文，注意你不能直译我你中文表达，要使用更地道的英文表达
 
-⚠️ *If the demo is temporarily unavailable, a demo video or screenshots can be provided upon request.*
+## Background
 
----
+During one of my postgraduate courses, I explored the principles and strategies of Agile development. As part of a team, I helped build an [online beverage store](https://github.com/icy1225/7780_assignment2_code.git) using Agile methodologies. To further demonstrate my personal grasp of Agile practices, as well as my full-stack development and deployment skills, I independently built upon that team project to create a refined version—**Agile Demo**.
+
+## Introduction
+
+**Agile Demo** is a full-stack web application built with HTML and CSS for the frontend, Node.js for the backend, MySQL for data management, and Docker for containerized deployment. The project is hosted on an AWS EC2 instance, showcasing a complete cloud deployment workflow.
+
+This application extends the [Online Beverage Store](https://github.com/icy1225/7780_assignment2_code.git), originally developed as part of an Agile team project. It illustrates the evolution across three Agile development cycles, with clear distinctions in frontend and backend updates at each stage. Whether you're looking to run it locally or deploy it to your own cloud server, this project offers a clean, portable setup to explore end-to-end Agile development in action.
 
 ## ⚠️ Important Note on Project Purpose
 
@@ -30,7 +34,7 @@ Please evaluate this project primarily as an Agile and DevOps showcase, rather t
 
 ---
 
-## 🔹 Key Highlights (Great for Recruiters)
+## 🔹 Key Highlights
 
 ✅ **Agile Development in Action**: Evolved from the [7780\_assignment2\_code](https://github.com/icy1225/7780_assignment2_code) learning project, this demo reflects principles like iterative delivery, rapid feedback, and continuous improvement.\
 ✅ **Full-Stack Implementation**: Covers frontend (HTML/CSS/JS), backend (Node.js/Express), and database (MySQL).\
@@ -97,16 +101,14 @@ docker-compose up --build
 
 Access locally:
 
-- `http://localhost:3000/cycle1/`
-- `http://localhost:3000/cycle2/`
-- `http://localhost:3000/cycle3/`
+- `http://localhost:3000/`
 
 ### Deploy to AWS EC2
 
 - Launch a Ubuntu-based EC2 instance
 - Install Docker and Docker Compose
 - Upload the project and run the above commands
-- Open port 3000 in the security group to allow public access
+- Open port **3000** in the security group to allow public access
 
 ---
 
