@@ -1,7 +1,9 @@
 var express = require('express');
 var app = express();
-app.use(express.urlencoded({ extended: true }));  // 解析 form 表单 POST 数据
-app.use(express.json());  // 解析 application/json 数据（已经用在 fetch）
+
+// ✅ 新增：限制请求体大小，防止 DoS 攻击
+app.use(express.urlencoded({ extended: true, limit: '1mb' })); // ✅ 新增
+app.use(express.json({ limit: '1mb' })); // ✅ 新增
 
 /* define pictures, css and images folders */
 app.use(express.static('public'));
@@ -10,6 +12,18 @@ app.use('/Cycle1', express.static(__dirname + '/views/Cycle1'));
 app.use('/Cycle2', express.static(__dirname + '/views/Cycle2'));
 app.use('/Cycle3', express.static(__dirname + '/views/Cycle3'));
 
+// ✅ 新增：使用连接池统一管理数据库连接
+const mysql = require('mysql2');
+const pool = mysql.createPool({
+    host: process.env.DB_HOST || "mysql", // 根据实际部署修改
+    user: process.env.DB_USER || "user99",
+    password: process.env.DB_PASSWORD || "user99",
+    database: process.env.DB_NAME || "comp7780",
+    waitForConnections: true,               // ✅ 新增
+    connectionLimit: 10,                    // ✅ 新增
+    queueLimit: 0,                          // ✅ 新增
+    connectTimeout: 5000                   // ✅ 新增
+});
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + "/views/homePage.html");
@@ -23,246 +37,119 @@ app.get('/Cycle1_product', function(req, res) {
     res.sendFile(__dirname + "/views/Cycle1/cycle1_product.html");
 });
 
-//Cycle2
 app.get('/Cycle2', function(req, res) {
     res.sendFile(__dirname + "/views/Cycle2/cycle2_home.html");
 });
 
 app.get('/Cycle2/product', function(req, res) {
-		res.sendFile(__dirname + "/views/Cycle2/cycle2_product.html");
-	});
+    res.sendFile(__dirname + "/views/Cycle2/cycle2_product.html");
+});
 
 app.get('/Cycle2/product/cart', function(req, res) {
-		res.send(`
+    res.send(`
     <script>
-      alert("🛒 Add Cart -- need MySQL support");
-      window.history.back(); // 或跳转 window.location.href = "/Cycle2/cycle2_product.html"
+      alert("Add Cart -- need MySQL support");
+      window.history.back();
     </script>
   `);
-	});
+});
 
 app.get('/Cycle2/product/check_out', function(req, res) {
-		res.send(`
+    res.send(`
     <script>
-      alert("🛒 Check Out -- need MySQL support");
-      window.history.back(); // 或跳转 window.location.href = "/Cycle2/cycle2_product.html"
+      alert("Check Out -- need MySQL support");
+      window.history.back();
     </script>
   `);
-	});
+});
 
-//Cycle3
 app.get('/Cycle3', function(req, res) {
     res.sendFile(__dirname + "/views/Cycle3/cycle3_home.html");
 });
 
 app.get('/Cycle3/product', function(req, res) {
-		res.sendFile(__dirname + "/views/Cycle3/cycle3_product.html");
-	});
+    res.sendFile(__dirname + "/views/Cycle3/cycle3_product.html");
+});
 
-// 添加到购物车路由（改为 POST 方法）
 app.post('/Cycle3/cart', function(req, res) {
     var prod_id = req.body.prod_id;
     var qty = req.body.qty;
     var price = req.body.price;
     var f_username = req.body.f_username;
 
-    var responseText = 'Prod_id: ' + prod_id + '<br>';
-    responseText += 'Qty: ' + qty + '<br>';
-    responseText += 'Price: ' + price + '<br>';
-    responseText += 'Username: ' + f_username + '<br><br>';
+    var responseText = `Prod_id: ${prod_id}<br>Qty: ${qty}<br>Price: ${price}<br>Username: ${f_username}<br><br>`;
 
     var now = new Date();
     var cur_date_yyyy_mm_dd = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
-    console.log("cur_date_yyyy_mm_dd is: " + cur_date_yyyy_mm_dd);
 
-    const mysql = require('mysql2');
-    const con = mysql.createConnection({
-        host: process.env.DB_HOST || "mysql",     
-        user: process.env.DB_USER || "user99",
-        password: process.env.DB_PASSWORD || "user99",
-        database: process.env.DB_NAME || "comp7780"
-    });
-
-    con.connect(function(err) {
+    var sql = "INSERT INTO cart (cust_username, cart_order_date, prod_id, cart_qty, cart_price) VALUES (?, ?, ?, ?, ?)";
+    pool.query(sql, [f_username, cur_date_yyyy_mm_dd, prod_id, qty, price], function(err, result) {
         if (err) {
-            console.error('Database connection error:', err);
-            responseText += 'Error connecting to database. Please try again later.';
-            res.send(responseText);
-            return;
-        }
-
-        var sql = "INSERT INTO cart (cust_username, cart_order_date, prod_id, cart_qty, cart_price) VALUES (?, ?, ?, ?, ?)";
-        con.query(sql, [f_username, cur_date_yyyy_mm_dd, prod_id, qty, price], function(err, result) {
-            if (err) {
-                console.error('Database query error:', err);
-                responseText += 'MySQL ERROR: Item not added!<br>';
-                responseText += '<br><br>';
-                responseText += '<input type="button" value="Close this page" onclick="self.close();" />';
-                res.send(responseText);
-                con.end();
-                return;
-            }
-
-            console.log(result);
-            console.log('Affected rows:', result.affectedRows);
-
+            console.error('Database query error:', err);
+            responseText += 'MySQL ERROR: Item not added!<br>';
+        } else {
             if (result.affectedRows > 0) {
-                responseText += 'Thank you for your order! ' + f_username + '<br>';
-                responseText += 'The above item has been added to your shopping cart. <br>';
+                responseText += `Thank you for your order! ${f_username}<br>The above item has been added to your shopping cart.<br>`;
             } else {
                 responseText += 'MySQL ERROR: Item not added!<br>';
             }
-            responseText += '<br><br>';
-            responseText += '<input type="button" value="Close this page" onclick="self.close();" />';
-            res.send(responseText);
-            con.end();
-        });
+        }
+        responseText += '<br><br><input type="button" value="Close this page" onclick="self.close();" />';
+        res.send(responseText);
     });
 });
 
-// 结账路由（POST 方法）
 app.post('/Cycle3/check_out', function(req, res) {
     var username = req.body.f_check_out_username;
     var cartData = req.body.cart_data;
 
-    console.log('Checkout request received:', { username, cartData });
+    var responseText = `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge" /></head><body><script src="https://www.paypal.com/sdk/js?client-id=ATSWa9vavLRPYABa5DAFOb7d6xFXlYIfpC4eE0ML-fo4wvxD7MhswAQkklI625Mqnbudf6psDaPUC5mj"></script>`;
 
-    var responseText = '<!DOCTYPE html>';
-    responseText += '<head><meta name="viewport" content="width=device-width, initial-scale=1">';
-    responseText += '<meta http-equiv="X-UA-Compatible" content="IE=edge" /></head>';
-    responseText += '<body><script src="https://www.paypal.com/sdk/js?client-id=ATSWa9vavLRPYABa5DAFOb7d6xFXlYIfpC4eE0ML-fo4wvxD7MhswAQkklI625Mqnbudf6psDaPUC5mj">';
-    responseText += '</script>';
-
-    const mysql = require('mysql2');
-    const con = mysql.createConnection({
-        host: process.env.DB_HOST || "mysql",     
-        user: process.env.DB_USER || "user99",
-        password: process.env.DB_PASSWORD || "user99",
-        database: process.env.DB_NAME || "comp7780"
-    });
-
-    con.connect(function(err) {
+    var sql = `SELECT DATE_FORMAT(cart.cart_order_date, '%Y-%m-%d') AS order_date, cart.prod_id, product.prod_desc, cart.cart_qty, cart.cart_price FROM cart INNER JOIN product ON cart.prod_id = product.prod_id WHERE cart.cust_username = ? ORDER BY order_date ASC, prod_id DESC;`;
+    pool.query(sql, [username], function(err, result) {
         if (err) {
-            console.error('Database connection error:', err);
-            responseText += 'Error connecting to database. Please try again later.';
-            responseText += '</body></html>';
+            console.error('Database query error:', err);
+            responseText += 'Error retrieving order details. Please try again later.</body></html>';
             res.send(responseText);
             return;
         }
 
-        // 使用参数化查询防止 SQL 注入
-        var sql = "SELECT DATE_FORMAT(cart.cart_order_date, '%Y-%m-%d') AS order_date, " +
-            "cart.prod_id, product.prod_desc, cart.cart_qty, cart.cart_price " +
-            "FROM cart " +
-            "INNER JOIN product ON cart.prod_id = product.prod_id " +
-            "WHERE cart.cust_username = ? " +
-            "ORDER BY order_date ASC, prod_id DESC;";
-        console.log('Executing SQL:', sql, 'with username:', username);
+        responseText += `Thank you for your order! ${username}<br>Your order details: <br><br><table border="2"><tr><th>Original Order Date</th><th>Product ID</th><th>Product Description</th><th>Quantity</th><th>Price</th><th>Amount</th></tr>`;
 
-        con.query(sql, [username], function(err, result) {
-            if (err) {
-                console.error('Database query error:', err);
-                responseText += 'Error retrieving order details. Please try again later.';
-                responseText += '</body></html>';
-                res.send(responseText);
-                con.end();
-                return;
-            }
+        var total_due = 0;
+        if (result.length === 0) {
+            responseText += '<tr><td colspan="6">No items found in your cart.</td></tr>';
+        } else {
+            result.forEach(row => {
+                var sub_total = row.cart_qty * row.cart_price;
+                responseText += `<tr><td>${row.order_date}</td><td>${row.prod_id}</td><td>${row.prod_desc}</td><td>${row.cart_qty}</td><td>${row.cart_price}</td><td>${sub_total}</td></tr>`;
+                total_due += sub_total;
+            });
+        }
 
-            console.log('Query result:', result);
+        responseText += `</table><br>Total Due: ${total_due.toFixed(2)}<br><br><div id="paypal-button-container"></div><p id="txt1"></p><script>paypal.Buttons({createOrder:function(data, actions){return actions.order.create({purchase_units:[{amount:{value:${total_due}}}]});},onApprove:function(data, actions){return actions.order.capture().then(function(details){alert("Transaction completed by " + details.payer.name.given_name);document.querySelector("#txt1").innerHTML = "Payment has completed! This web page can be closed now!";document.querySelector("#txt1").style.backgroundColor = "yellow";document.querySelector("#txt1").style.color = "red";fetch("/Cycle3/clear_cart", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ f_username: "${username}" }) });});}}).render("#paypal-button-container");</script></body></html>`;
 
-            responseText += 'Thank you for your order! ' + username + '<br>';
-            responseText += 'Your order details: <br><br>';
-            responseText += '<table border="2">';
-            responseText += '<tr><th>Original Order Date</th><th>Product ID</th><th>Product Description</th><th>Quantity</th><th>Price</th><th>Amount</th></tr>';
-
-            var total_due = 0;
-            var sub_total = 0;
-            if (result.length === 0) {
-                responseText += '<tr><td colspan="6">No items found in your cart.</td></tr>';
-            } else {
-                for (var i = 0; i < result.length; i++) {
-                    sub_total = result[i].cart_qty * result[i].cart_price;
-                    responseText += '<tr><td>' + result[i].order_date + '</td><td>' + result[i].prod_id + '</td><td>' + result[i].prod_desc + '</td><td>' + result[i].cart_qty + '</td><td>' + result[i].cart_price + '</td><td>' + sub_total + '</td></tr>';
-                    total_due += sub_total;
-                }
-            }
-            responseText += '</table>';
-            responseText += '<br>Total Due: ' + total_due.toFixed(2);
-            responseText += '<br><br>';
-
-            responseText += '<div id="paypal-button-container"></div>';
-            responseText += '<p id="txt1"></p>';
-            responseText += '<script>';
-            responseText += 'paypal.Buttons({';
-            responseText += 'createOrder: function(data, actions) {';
-            responseText += 'return actions.order.create({';
-            responseText += 'purchase_units: [{';
-            responseText += 'amount: {';
-            responseText += 'value: ' + total_due + '}';
-            responseText += '}]';
-            responseText += '});';
-            responseText += '},';
-            responseText += 'onApprove: function(data, actions) {';
-            responseText += 'return actions.order.capture().then(function(details) {';
-            responseText += 'alert("Transaction completed by " + details.payer.name.given_name);';
-            responseText += 'document.querySelector("#txt1").innerHTML = "Payment has completed! This web page can be closed now!";';
-            responseText += 'document.querySelector("#txt1").style.backgroundColor = "yellow";';
-            responseText += 'document.querySelector("#txt1").style.color = "red";';
-            // 支付成功后清空购物车
-            responseText += 'fetch("/Cycle3/clear_cart", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ f_username: "' + username + '" }) });';
-            responseText += '});';
-            responseText += '}';
-            responseText += '}).render("#paypal-button-container");';
-            responseText += '</script>';
-            responseText += '</body></html>';
-
-            res.send(responseText);
-            con.end();
-        });
+        res.send(responseText);
     });
 });
 
-// 清空购物车路由
 app.post('/Cycle3/clear_cart', function(req, res) {
     var username = req.body.f_username;
-
-    const mysql = require('mysql2');
-    const con = mysql.createConnection({
-        host: process.env.DB_HOST || "mysql",     
-        user: process.env.DB_USER || "user99",
-        password: process.env.DB_PASSWORD || "user99",
-        database: process.env.DB_NAME || "comp7780"
-    });
-
-    con.connect(function(err) {
+    var sql = "DELETE FROM cart WHERE cust_username = ?";
+    pool.query(sql, [username], function(err, result) {
         if (err) {
-            console.error('Database connection error:', err);
-            res.send('Error connecting to database');
+            console.error('Database query error:', err);
+            res.send('Error clearing cart');
             return;
         }
-
-        var sql = "DELETE FROM cart WHERE cust_username = ?";
-        con.query(sql, [username], function(err, result) {
-            if (err) {
-                console.error('Database query error:', err);
-                res.send('Error clearing cart');
-                con.end();
-                return;
-            }
-
-            console.log('Cart cleared for user:', username, 'Affected rows:', result.affectedRows);
-            res.send('Cart cleared');
-            con.end();
-        });
+        console.log('Cart cleared for user:', username, 'Affected rows:', result.affectedRows);
+        res.send('Cart cleared');
     });
 });
 
-// Start the server
 app.listen(3000, '0.0.0.0', function() {
     console.log('App running at http://localhost:3000');
 });
 
-//end
 console.log('DB_HOST:', process.env.DB_HOST);
 console.log('End of Program.');
