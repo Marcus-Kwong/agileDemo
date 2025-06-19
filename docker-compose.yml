@@ -33,7 +33,7 @@ services:
     command: >
       bash -c "
       rm -rf /var/lib/mysql/* &&
-      docker-entrypoint.sh mysqld
+      docker-entrypoint.sh mysqld --innodb-buffer-pool-size=128M
       "
     mem_limit: 512m
     cpus: '0.8'
