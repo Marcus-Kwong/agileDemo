@@ -1,23 +1,26 @@
 services:
-  app:
+  agileDemo-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agile-demo-app:latest
     container_name: agileDemo-app
-    build: .
     ports:
       - "3000:3000"
     restart: unless-stopped
     depends_on:
-      - mysql
+      - agileDemo-mysql
     environment:
-      DB_HOST: mysql
+      DB_HOST: agileDemo-mysql
       DB_USER: user99
       DB_PASSWORD: user99
       DB_NAME: comp7780
     mem_limit: 256m
     cpus: '0.6'
 
-  mysql:
-    container_name: agileDemo-mysql
+  agileDemo-mysql:
     image: mysql:8
+    container_name: agileDemo-mysql
     # command: --default-authentication-plugin=mysql_native_password
     ports:
       - "3307:3306"

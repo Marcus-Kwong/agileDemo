@@ -19,10 +19,10 @@ const pool = mysql.createPool({
     user: process.env.DB_USER || "user99",
     password: process.env.DB_PASSWORD || "user99",
     database: process.env.DB_NAME || "comp7780",
-    waitForConnections: true,               // ✅ 新增
-    connectionLimit: 10,                    // ✅ 新增
-    queueLimit: 0,                          // ✅ 新增
-    connectTimeout: 5000                   // ✅ 新增
+    // waitForConnections: true,               // ✅ 新增
+    // connectionLimit: 10,                    // ✅ 新增
+    // queueLimit: 0,                          // ✅ 新增
+    // connectTimeout: 5000                   // ✅ 新增
 });
 
 app.get('/', function(req, res) {
