@@ -15,8 +15,8 @@ services:
       DB_USER: user99
       DB_PASSWORD: user99
       DB_NAME: comp7780
-    mem_limit: 96m
-    cpus: '0.1'
+    mem_limit: 256m
+    cpus: '0.5'
 
   agileDemo-mysql:
     image: mysql:8
@@ -34,11 +34,8 @@ services:
       - agileDemo_mysql_data:/var/lib/mysql
       - ./mysql/init:/docker-entrypoint-initdb.d
     command: >
-      bash -c "
-      rm -rf /var/lib/mysql/* &&
-      docker-entrypoint.sh mysqld --innodb-buffer-pool-size=16M
-      "
-    mem_limit: 192m
-    cpus: '0.3'
+      docker-entrypoint.sh mysqld --innodb-buffer-pool-size=64M
+    mem_limit: 512m
+    cpus: '1'
 volumes:
   agileDemo_mysql_data:
