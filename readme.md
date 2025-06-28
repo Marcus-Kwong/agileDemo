@@ -6,7 +6,7 @@
 
 ## 🌐 Live Demo Preview
 
-👉 [Agile Demo](http://18.163.159.136:3000/)
+👉 [Agile Demo](https://agile.marcuss.space/)
 
 ## Background
 
